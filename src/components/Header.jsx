@@ -1,7 +1,12 @@
 import React from "react";
+import styled from "styled-components";
+
+const Bar = styled.div`
+  background-color: lightgreen;
+`;
 
 const Header = () => {
-  return <h1 className="ml2 mr2 f1">Welcome to Captain Hook's online store</h1>;
+  return <Bar>Welcome to Captain Hook's online store</Bar>;
 };
 
 export default Header;

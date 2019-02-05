@@ -1,49 +1,45 @@
-import React from "react";
-import axios from "axios";
-import { useState, useEffect } from "react";
+import React, { Component, Fragment } from "react";
+
 import Header from "./components/Header";
+import Main from "./pages/Main";
+import Product from "./pages/Product";
+import NotFound from "./pages/NotFound";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { createGlobalStyle } from "styled-components";
+
+import { Normalize } from "styled-normalize";
+
 import "./App.css";
 
-const App = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+const GlobalStyle = createGlobalStyle`
 
-  const fetchData = async () => {
-    const result = await axios
-      .get(
-        `https://api.bestbuy.com/v1/products((search=LG)&(categoryPath.id=abcat0101000))?apiKey=sUu2r5kFBOd8VPsYvCuGdBbb&sort=thumbnailImage.asc&show=thumbnailImage,addToCartUrl,image,name,regularPrice,salePrice,shortDescription,type,sku&format=json`
-      )
-      .then(response => response.data.products);
-
-    console.log(result);
-
-    setProducts(result);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
+  html, body {
+    font-size: 16px; /* Base measure for REM units */ 
+    margin: 0;
+    padding: 0;
   }
+  
+`;
 
-  return (
-    <div>
-      <Header />
-      <div className="flex flex-wrap">
-        {products.map(product => {
-          return (
-            <div key={product.sku} className="mw-20 ma3">
-              <img className="product-image" src={product.image} alt={product.name} />
-              <p>{product.name}</p>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
+class App extends Component {
+  render() {
+    return (
+      <Fragment>
+        <Normalize />
+        <GlobalStyle />
+        <BrowserRouter>
+          <Fragment>
+            <Route path="/" component={Header} />
+            <Switch>
+              <Route path="/" exact component={Main} />
+              <Route path="/products/:id" exact component={Product} />
+              <Route component={NotFound} />
+            </Switch>
+          </Fragment>
+        </BrowserRouter>
+      </Fragment>
+    );
+  }
+}
 
 export default App;
