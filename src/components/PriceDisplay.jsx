@@ -9,7 +9,6 @@ const Wrapper = styled.div`
 `;
 
 const PriceDisplay = ({ regularPrice, salePrice }) => {
-  console.log({ salePrice, regularPrice });
   return (
     <UnorderedList display="flex" marginLeft="2rem">
       <ListItem display="flex" justifyContent="space-around" icon="dollar">

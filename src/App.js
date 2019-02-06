@@ -9,8 +9,6 @@ import { createGlobalStyle } from "styled-components";
 
 import { Normalize } from "styled-normalize";
 
-import "./App.css";
-
 const GlobalStyle = createGlobalStyle`
   html, body {
     font-size: 16px; /* Base measure for REM units */ 
