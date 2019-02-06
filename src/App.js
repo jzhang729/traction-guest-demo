@@ -1,18 +1,40 @@
 import React, { Fragment } from "react";
 
 import Header from "./components/Header";
-// import Main from "./pages/Main";
-// import Product from "./pages/Product";
 import Loadable from "react-loadable";
 import Loading from "./components/Loading";
 import NotFound from "./pages/NotFound";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
-// import asyncComponent from "./components/asyncComponent";
 
 import { Normalize } from "styled-normalize";
+import styled from "styled-components";
+import useCart from "./hooks/useCart";
+import CartContext from "./contexts/CartContext";
 
-import "./App.css";
+const AppWrapper = styled.div`
+  position: absolute;
+`;
+
+const Cart = styled.div`
+  position: absolute;
+  border: 2px solid red;
+  overflow-y: scroll;
+  top: 5rem;
+  right: 0;
+  height: 100%;
+  background-color: #ffffff;
+  z-index: 3;
+  padding: 1rem;
+  opacity: 1;
+  /* transform: ${props => (props.isCartVisible ? "translateX(0%)" : "translateX(100%)")}; */
+  box-shadow: 0.25rem 0 1rem #333333;
+  width: 100%;
+
+  @media (min-width: 400px) {
+    width: 400px;
+  }
+`;
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -33,19 +55,29 @@ const AsyncProduct = Loadable({
 });
 
 const App = () => {
+  const { isCartVisible, setIsCartVisible } = useCart();
+
   return (
     <Fragment>
       <Normalize />
-      <GlobalStyle />
+      <GlobalStyle /> {/* Overwrite any global styles from Normalize here */}
       <BrowserRouter>
-        <Fragment>
-          <Route path="/" component={Header} />
-          <Switch>
-            <Route path="/" exact component={AsyncMain} />
-            <Route path="/products/:id" exact component={AsyncProduct} />
-            <Route component={NotFound} />
-          </Switch>
-        </Fragment>
+        <CartContext.Provider
+          value={{
+            isCartVisible,
+            setIsCartVisible
+          }}
+        >
+          <AppWrapper>
+            <Route path="/" component={Header} />
+            <Switch>
+              <Route path="/" exact component={AsyncMain} />
+              <Route path="/products/:id" exact component={AsyncProduct} />
+              <Route component={NotFound} />
+            </Switch>
+            {isCartVisible ? <Cart>Cart goes here</Cart> : null}
+          </AppWrapper>
+        </CartContext.Provider>
       </BrowserRouter>
     </Fragment>
   );
