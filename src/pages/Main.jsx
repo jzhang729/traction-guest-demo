@@ -1,7 +1,8 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Pane } from "evergreen-ui";
 import ProductCard from "../components/ProductCard";
 import useFetchApi from "../hooks/useFetchApi";
+import { PageWrapper } from "../styles/global";
 
 const Main = () => {
   const { data, isLoading, isError } = useFetchApi(
@@ -12,7 +13,7 @@ const Main = () => {
   );
 
   return (
-    <Fragment>
+    <PageWrapper>
       {isError && <div>Something went wrong...</div>}
 
       {isLoading ? (
@@ -24,7 +25,7 @@ const Main = () => {
           })}
         </Pane>
       )}
-    </Fragment>
+    </PageWrapper>
   );
 };
 

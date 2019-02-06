@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Button, Pane, Paragraph, Strong } from "evergreen-ui";
 import PriceDisplay from "./PriceDisplay";
 import slugify from "slugify";
+import CartContext from "../contexts/CartContext";
 
 const ProductCard = ({ product }) => {
+  const { isCartVisible, setIsCartVisible } = useContext(CartContext);
+
   return (
     <Pane
       margin="1rem"
@@ -33,7 +36,14 @@ const ProductCard = ({ product }) => {
         <PriceDisplay regularPrice={product.regularPrice} salePrice={product.salePrice} />
       </Pane>
       <Pane justifySelf="flex-end">
-        <Button appearance="primary" intent="none" color="#ffffff" marginRight={12} height={40}>
+        <Button
+          appearance="primary"
+          intent="none"
+          color="#ffffff"
+          marginRight={12}
+          height={40}
+          onClick={() => (isCartVisible ? null : setIsCartVisible(true))}
+        >
           Add To Cart
         </Button>
       </Pane>

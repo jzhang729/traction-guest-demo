@@ -1,6 +1,7 @@
-import React, { Fragment } from "react";
+import React from "react";
 import useFetchApi from "../hooks/useFetchApi";
 import { Pane } from "evergreen-ui";
+import { PageWrapper } from "../styles/global";
 
 const Product = props => {
   const {
@@ -10,12 +11,12 @@ const Product = props => {
   } = useFetchApi(
     `https://api.bestbuy.com/v1/products(sku=${props.location.state.sku})?apiKey=${
       process.env.REACT_APP_API_KEY
-    }&show=name,sku,image,regularPrice,salePrice&sort=name.asc&format=json`,
+    }&show=name,sku,image,regularPrice,salePrice,description,shortDescription,features&sort=name.asc&format=json`,
     "singleProduct"
   );
 
   return (
-    <Fragment>
+    <PageWrapper>
       {isError && <div>Something went wrong...</div>}
       {isLoading ? (
         <div>Loading...</div>
@@ -28,7 +29,7 @@ const Product = props => {
           {/* <span>{props.location.state.sku}</span> */}
         </Pane>
       )}
-    </Fragment>
+    </PageWrapper>
   );
 };
 
