@@ -1,6 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button, Pane, Paragraph, Strong } from "evergreen-ui";
 import PriceDisplay from "./PriceDisplay";
+import slugify from "slugify";
 
 const ProductCard = ({ product }) => {
   return (
@@ -15,7 +17,14 @@ const ProductCard = ({ product }) => {
       onMouseEnter={() => console.log("mouse entered")}
     >
       <Pane marginBottom="2rem">
-        <img src={product.image} alt={product.name} />
+        <Link
+          to={{
+            pathname: `/products/${slugify(product.name, { lower: true, remove: /"/g })}`,
+            state: { sku: product.sku }
+          }}
+        >
+          <img src={product.image} alt={product.name} />
+        </Link>
       </Pane>
       <Pane flex="1 1 100px">
         <Paragraph>
