@@ -12,10 +12,6 @@ import styled from "styled-components";
 import useCart from "./hooks/useCart";
 import CartContext from "./contexts/CartContext";
 
-const AppWrapper = styled.div`
-  position: absolute;
-`;
-
 const Cart = styled.div`
   position: absolute;
   border: 2px solid red;
@@ -68,7 +64,7 @@ const App = () => {
             setIsCartVisible
           }}
         >
-          <AppWrapper>
+          <div>
             <Route path="/" component={Header} />
             <Switch>
               <Route path="/" exact component={AsyncMain} />
@@ -76,7 +72,7 @@ const App = () => {
               <Route component={NotFound} />
             </Switch>
             {isCartVisible ? <Cart>Cart goes here</Cart> : null}
-          </AppWrapper>
+          </div>
         </CartContext.Provider>
       </BrowserRouter>
     </Fragment>

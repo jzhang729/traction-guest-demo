@@ -1,17 +1,33 @@
 import { useState, useEffect } from "react";
-// import axios from "axios";
-import sampleData from "../sampleData";
+import axios from "axios";
+import listProducts from "../mockData/listProducts";
+import singleProduct from "../mockData/singleProduct";
 
-const useFetchApi = (initialUrl = "", initialData = []) => {
+const useFetchApi = (initialUrl = "", mockResultKey = null) => {
+  // const [isMock] = useState(Boolean(mockResultKey));
   const [url, setUrl] = useState(initialUrl);
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
+  /* To avoid hitting the API during development, use mock data if a key is passed in */
+  const mockResults = { listProducts, singleProduct };
+
+  const fetchMockData = () => {
+    const result = mockResults[mockResultKey];
+    console.log("mock result", result);
+
+    try {
+      setData(result);
+      setIsLoading(false);
+    } catch (error) {
+      setIsError(true);
+    }
+  };
+
   const fetchData = async () => {
     try {
-      // const result = await axios.get(url).then(response => response.data.products);
-      const result = sampleData;
+      const result = await axios.get(url).then(response => response.data);
       console.log(result);
       setData(result);
       setIsLoading(false);
@@ -22,7 +38,11 @@ const useFetchApi = (initialUrl = "", initialData = []) => {
 
   useEffect(
     () => {
-      fetchData();
+      if (mockResultKey) {
+        fetchMockData();
+      } else {
+        fetchData();
+      }
     },
     [url]
   );
