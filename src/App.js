@@ -1,14 +1,11 @@
 import React, { Fragment } from "react";
 
 import Header from "./components/Header";
-// import Main from "./pages/Main";
-// import Product from "./pages/Product";
 import Loadable from "react-loadable";
 import Loading from "./components/Loading";
 import NotFound from "./pages/NotFound";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
-// import asyncComponent from "./components/asyncComponent";
 
 import { Normalize } from "styled-normalize";
 

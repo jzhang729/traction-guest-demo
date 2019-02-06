@@ -1,0 +1,35 @@
+import React from "react";
+import { Button, Pane, Paragraph, Strong } from "evergreen-ui";
+import PriceDisplay from "./PriceDisplay";
+
+const ProductCard = ({ product }) => {
+  return (
+    <Pane
+      margin="1rem"
+      padding="1rem"
+      maxWidth="30%"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      border="muted"
+      onMouseEnter={() => console.log("mouse entered")}
+    >
+      <Pane marginBottom="2rem">
+        <img src={product.image} alt={product.name} />
+      </Pane>
+      <Pane flex="1 1 100px">
+        <Paragraph>
+          <Strong size={400}>{product.name}</Strong>
+        </Paragraph>
+        <PriceDisplay regularPrice={product.regularPrice} salePrice={product.salePrice} />
+      </Pane>
+      <Pane justifySelf="flex-end">
+        <Button appearance="primary" intent="none" color="#ffffff" marginRight={12} height={40}>
+          Add To Cart
+        </Button>
+      </Pane>
+    </Pane>
+  );
+};
+
+export default ProductCard;
