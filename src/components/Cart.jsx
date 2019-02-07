@@ -1,27 +1,8 @@
 import React, { Fragment, useContext } from "react";
-import { Button, Heading, Pane, Icon } from "evergreen-ui";
+import { Button, Card, Heading, Pane, SideSheet } from "evergreen-ui";
 import { Paragraph } from "evergreen-ui";
-import styled from "styled-components";
-import { Motion, spring } from "react-motion";
 import CartContext from "../contexts/CartContext";
-import { Overlay } from "../styles/global";
 import { getProductPrice } from "../utils/cartFunctions";
-
-const CartStyle = styled.div`
-  position: fixed;
-  background-color: #ffffff;
-  z-index: 3;
-  padding: 1rem;
-  opacity: 1;
-  height: 100vh;
-  box-shadow: 0.25rem 0 1rem #333333;
-
-  @media (min-width: 400px) {
-    right: 100px;
-    width: 100%;
-    width: 500px;
-  }
-`;
 
 const Cart = () => {
   const { isCartVisible, setIsCartVisible, cartItems, cartTotal } = useContext(CartContext);
@@ -30,77 +11,67 @@ const Cart = () => {
     console.log("Submitting cart");
   };
 
-  // const renderCartItems = cartItems => {
-  //   for (const item of cartItems) {
-  //     return <div key={item.sku}>{item.name}</div>;
-  //   }
-  // };
-
   return (
     <Fragment>
-      {isCartVisible ? <Overlay onClick={() => setIsCartVisible(false)} /> : null}
-      <Motion
-        defaultValue={{ x: 140, opacity: 0 }}
-        style={{
-          x: spring(isCartVisible ? 25 : 140),
-          opacity: spring(isCartVisible ? 1 : 0)
-        }}
+      <SideSheet
+        isShown={isCartVisible}
+        preventBodyScrolling
+        onCloseComplete={() => setIsCartVisible(false)}
+        width={400}
       >
-        {style => {
-          return (
-            <CartStyle
-              style={{
-                transform: `translateX(${style.x}%)`,
-                opacity: style.opacity
-              }}
-            >
-              <Pane display="flex" flexDirection="column" height="100%" paddingX="1rem">
-                <Pane display="flex" justifyContent="flex-end">
-                  <Icon
-                    cursor="pointer"
-                    icon="cross"
-                    size={32}
-                    onClick={() => {
-                      setIsCartVisible(false);
-                    }}
-                  />
+        <Pane zIndex={1} flexShrink={0} elevation={0} backgroundColor="white">
+          <Pane padding={16}>
+            <Heading size={600}>Title</Heading>
+            <Paragraph size={400}>Optional description or sub title</Paragraph>
+          </Pane>
+        </Pane>
+        <Pane flex="1" overflowY="scroll" background="tint1" padding={16}>
+          {cartItems.map((item, index) => {
+            return (
+              <Card
+                key={index}
+                backgroundColor="white"
+                elevation={0}
+                marginBottom="1rem"
+                padding="1rem"
+              >
+                <Pane display="flex" justifyContent="space-between">
+                  <img src={item.thumbnailImage} alt={item.name} />
+                  <Heading size={400} marginX="0.5rem">
+                    {item.name}
+                  </Heading>
                 </Pane>
-                <Pane paddingTop="1rem" paddingBottom="1rem" flex="1 0 auto" maxWidth="90%">
-                  {cartItems.map((item, index) => {
-                    return (
-                      <Pane key={index} marginBottom="1rem">
-                        <Pane display="flex" justifyContent="space-between">
-                          <img src={item.thumbnailImage} alt={item.name} />
-                          <Heading size={500} marginX="0.5rem">
-                            {item.name}
-                          </Heading>
-                        </Pane>
+                <Pane marginTop="1rem">
+                  <Heading size={200}>Price: ${getProductPrice(item)}</Heading>
+                  <Heading size={200}>Quantity: {item.quantity}</Heading>
+                </Pane>
+              </Card>
+            );
+          })}
+        </Pane>
 
-                        <Pane>${getProductPrice(item)}</Pane>
-                        <Pane>{item.quantity}</Pane>
-                      </Pane>
-                    );
-                  })}
-                  {/* {renderCartItems(cartItems)} */}
-                </Pane>
-                <Paragraph>Total: ${cartTotal}</Paragraph>
-                <Pane display="flex" justifyContent="center">
-                  <Button
-                    appearance="primary"
-                    intent="success"
-                    color="#ffffff"
-                    marginRight={12}
-                    height={40}
-                    onClick={() => submitCart()}
-                  >
-                    Load Aboard
-                  </Button>
-                </Pane>
-              </Pane>
-            </CartStyle>
-          );
-        }}
-      </Motion>
+        <Pane zIndex={1} flexShrink={0} elevation={0} backgroundColor="white">
+          <Pane padding={16}>
+            <Paragraph marginX="auto" paddingY="1rem" display="flex" justifyContent="center">
+              Total: ${cartTotal}
+            </Paragraph>
+            <Button
+              appearance="primary"
+              intent="success"
+              color="#ffffff"
+              marginRight={12}
+              height={40}
+              onClick={() => submitCart()}
+              width="50%"
+              marginX="auto"
+              display="flex"
+              justifyContent="center"
+            >
+              Load Aboard
+            </Button>
+          </Pane>
+        </Pane>
+      </SideSheet>
     </Fragment>
   );
 };
