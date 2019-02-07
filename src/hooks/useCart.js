@@ -24,14 +24,24 @@ const useCart = () => {
     }, 0);
   };
 
+  const incrementQuantity = (product, amountToIncrement = 1) => {
+    const index = findIndexOfItemInCart(product);
+    const updatedItem = { ...product, quantity: product.quantity + amountToIncrement };
+    const updatedCart = [
+      ...Array.prototype.slice.call(cartItems, 0, index),
+      updatedItem,
+      ...Array.prototype.slice.call(cartItems, index + 1)
+    ];
+    setCartItems(updatedCart);
+  };
+
   const addToCart = product => {
+    console.log({ product });
     const itemAlreadyInCart = cartItems.find(item => item.sku === product.sku);
+    console.log({ itemAlreadyInCart });
 
     if (itemAlreadyInCart) {
-      const index = findIndexOfItemInCart(itemAlreadyInCart);
-      const updatedItem = { ...product, quantity: product.quantity + 1 };
-      const updatedCart = Object.assign([], cartItems, { [index]: updatedItem });
-      setCartItems(updatedCart);
+      incrementQuantity(itemAlreadyInCart);
     } else {
       // Adding an item to cart where there was none before
       const productWithQuantity = { ...product, quantity: 1 };
@@ -45,17 +55,6 @@ const useCart = () => {
 
   const findIndexOfItemInCart = product => {
     return cartItems.indexOf(cartItems.find(item => item.sku === product.sku));
-  };
-
-  const incrementQuantity = (product, amountToIncrement = 1) => {
-    const index = findIndexOfItemInCart(product);
-    const updatedItem = { ...product, quantity: product.quantity + amountToIncrement };
-    const updatedCart = [
-      ...Array.prototype.slice.call(cartItems, 0, index),
-      updatedItem,
-      ...Array.prototype.slice.call(cartItems, index + 1)
-    ];
-    setCartItems(updatedCart);
   };
 
   const removeFromCart = product => {
