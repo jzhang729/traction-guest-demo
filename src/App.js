@@ -6,8 +6,6 @@ import Header from "./components/Header";
 import Loading from "./components/Loading";
 import Cart from "./components/Cart";
 
-import NotFound from "./pages/NotFound";
-
 import useCart from "./hooks/useCart";
 import CartContext from "./contexts/CartContext";
 
@@ -15,7 +13,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { Normalize } from "styled-normalize";
 
-const ContentWrapper = styled.div`
+const AppWrapper = styled.div`
   position: relative;
   height: 100vh;
   width: 100vw;
@@ -26,9 +24,6 @@ const GlobalStyle = createGlobalStyle`
     font-size: 16px; /* Base measure for REM units */ 
     margin: 0;
     padding: 0;
-    width: 100vw;
-    overflow-x: hidden;
-    overflow-y: scroll;
   }  
 `;
 
@@ -42,8 +37,20 @@ const AsyncProduct = Loadable({
   loading: Loading
 });
 
+const AsyncNotFound = Loadable({
+  loader: () => import("./pages/NotFound"),
+  loading: Loading
+});
+
 const App = () => {
-  const { isCartVisible, setIsCartVisible } = useCart();
+  const {
+    isCartVisible,
+    setIsCartVisible,
+    cartItems,
+    setCartItems,
+    cartTotal,
+    setCartTotal
+  } = useCart();
 
   return (
     <Fragment>
@@ -53,18 +60,22 @@ const App = () => {
         <CartContext.Provider
           value={{
             isCartVisible,
-            setIsCartVisible
+            setIsCartVisible,
+            cartItems,
+            setCartItems,
+            cartTotal,
+            setCartTotal
           }}
         >
-          <Cart />
-          <Route path="/" component={Header} />
-          <ContentWrapper>
+          <AppWrapper>
+            <Cart />
+            <Route path="/" component={Header} />
             <Switch>
               <Route path="/" exact component={AsyncMain} />
               <Route path="/products/:id" exact component={AsyncProduct} />
-              <Route component={NotFound} />
+              <Route component={AsyncNotFound} />
             </Switch>
-          </ContentWrapper>
+          </AppWrapper>
         </CartContext.Provider>
       </BrowserRouter>
     </Fragment>

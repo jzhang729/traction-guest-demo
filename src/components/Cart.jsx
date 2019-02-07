@@ -1,64 +1,77 @@
 import React, { Fragment, useContext } from "react";
+import { Button, Card, Heading, Pane, SideSheet } from "evergreen-ui";
 import { Paragraph } from "evergreen-ui";
-import styled from "styled-components";
-import { Motion, spring } from "react-motion";
 import CartContext from "../contexts/CartContext";
-import { Overlay } from "../styles/global";
-
-const CartStyle = styled.div`
-  position: fixed;
-  background-color: #ffffff;
-  z-index: 3;
-  padding: 1rem;
-  opacity: 1;
-  height: 100vh;
-  box-shadow: 0.25rem 0 1rem #333333;
-
-  @media (min-width: 400px) {
-    right: 100px;
-    width: 100%;
-    width: 400px;
-  }
-`;
+import { getProductPrice } from "../utils/cartFunctions";
 
 const Cart = () => {
-  const { isCartVisible, setIsCartVisible } = useContext(CartContext);
+  const { isCartVisible, setIsCartVisible, cartItems, cartTotal } = useContext(CartContext);
+
+  const submitCart = () => {
+    console.log("Submitting cart");
+  };
 
   return (
     <Fragment>
-      {isCartVisible ? <Overlay onClick={() => setIsCartVisible(false)} /> : null}
-      <Motion
-        defaultValue={{ x: 140, opacity: 0 }}
-        style={{
-          x: spring(isCartVisible ? 25 : 140),
-          opacity: spring(isCartVisible ? 1 : 0)
-        }}
+      <SideSheet
+        isShown={isCartVisible}
+        preventBodyScrolling
+        onCloseComplete={() => setIsCartVisible(false)}
+        width={400}
       >
-        {style => {
-          return (
-            <CartStyle
-              style={{
-                transform: `translateX(${style.x}%)`,
-                opacity: style.opacity
-              }}
+        <Pane zIndex={1} flexShrink={0} elevation={0} backgroundColor="white">
+          <Pane padding={16}>
+            <Heading size={600}>Title</Heading>
+            <Paragraph size={400}>Optional description or sub title</Paragraph>
+          </Pane>
+        </Pane>
+        <Pane flex="1" overflowY="scroll" background="tint1" padding={16}>
+          {cartItems.map((item, index) => {
+            return (
+              <Card
+                key={index}
+                backgroundColor="white"
+                elevation={0}
+                marginBottom="1rem"
+                padding="1rem"
+              >
+                <Pane display="flex" justifyContent="space-between">
+                  <img src={item.thumbnailImage} alt={item.name} />
+                  <Heading size={400} marginX="0.5rem">
+                    {item.name}
+                  </Heading>
+                </Pane>
+                <Pane marginTop="1rem">
+                  <Heading size={200}>Price: ${getProductPrice(item)}</Heading>
+                  <Heading size={200}>Quantity: {item.quantity}</Heading>
+                </Pane>
+              </Card>
+            );
+          })}
+        </Pane>
+
+        <Pane zIndex={1} flexShrink={0} elevation={0} backgroundColor="white">
+          <Pane padding={16}>
+            <Paragraph marginX="auto" paddingY="1rem" display="flex" justifyContent="center">
+              Total: ${cartTotal}
+            </Paragraph>
+            <Button
+              appearance="primary"
+              intent="success"
+              color="#ffffff"
+              marginRight={12}
+              height={40}
+              onClick={() => submitCart()}
+              width="50%"
+              marginX="auto"
+              display="flex"
+              justifyContent="center"
             >
-              <Paragraph>
-                Barkadeer parrel holystone draught crack Jennys tea cup rum wench nipper rope's end
-                take a caulk. Loot avast walk the plank Buccaneer yardarm barkadeer yawl keelhaul
-                boatswain nipperkin. Smartly jib jack brig reef reef sails bounty rigging splice the
-                main brace Admiral of the Black. Dead men tell no tales wench chase guns sutler Sail
-                ho fire ship gun case shot Barbary Coast coffer. Pressgang lanyard heave to gunwalls
-                galleon jolly boat crimp Blimey lad mizzen. Me jib square-rigged trysail lugger
-                keelhaul boatswain Barbary Coast piracy Sail ho. No prey, no pay jury mast reef
-                sails spyglass quarterdeck rutters Chain Shot heave down fire ship broadside. Sail
-                ho main sheet stern chase bring a spring upon her cable interloper bounty black spot
-                sloop driver. Yawl grog rutters Cat o'nine tails gangway pillage crimp black jack
-                squiffy Chain Shot.
-              </Paragraph>
-            </CartStyle>
-          );
-        }}
-      </Motion>
+              Load Aboard
+            </Button>
+          </Pane>
+        </Pane>
+      </SideSheet>
     </Fragment>
   );
 };
