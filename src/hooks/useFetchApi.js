@@ -15,7 +15,7 @@ const useFetchApi = (initialUrl = "", mockResultKey = null) => {
   const fetchMockData = () => {
     const result = mockResults[mockResultKey];
     try {
-      console.log(result);
+      // console.log(result);
       setData(result);
       setIsLoading(false);
     } catch (error) {
