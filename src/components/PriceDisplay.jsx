@@ -12,7 +12,7 @@ const PriceDisplay = ({ regularPrice, salePrice }) => {
   return (
     <UnorderedList display="flex" marginLeft="2rem">
       <ListItem display="flex" justifyContent="space-around" icon="dollar">
-        {salePrice ? (
+        {salePrice && salePrice !== regularPrice ? (
           <Wrapper>
             <s>{regularPrice}</s>
             <Strong size={500}>{salePrice}</Strong>
