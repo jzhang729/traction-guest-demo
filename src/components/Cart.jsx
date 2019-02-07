@@ -16,7 +16,7 @@ const Cart = () => {
         isShown={isCartVisible}
         preventBodyScrolling
         onCloseComplete={() => setIsCartVisible(false)}
-        width={400}
+        width={window.innerWidth < 600 ? 300 : 400}
       >
         <Pane zIndex={1} flexShrink={0} elevation={0} backgroundColor="white">
           <Pane padding="2rem">

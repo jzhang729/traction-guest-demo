@@ -58,17 +58,21 @@ const useCart = () => {
     setCartItems(updatedCart);
   };
 
+  const removeFromCart = product => {
+    const index = findIndexOfItemInCart(product);
+    const updatedCart = [
+      ...Array.prototype.slice.call(cartItems, 0, index),
+      ...Array.prototype.slice.call(cartItems, index + 1)
+    ];
+    setCartItems(updatedCart);
+  };
+
   const decrementQuantity = (product, amountToDecrement = 1) => {
     const index = findIndexOfItemInCart(product);
     const updatedItem = { ...product, quantity: product.quantity - amountToDecrement };
 
     if (updatedItem.quantity <= 0) {
-      const index = findIndexOfItemInCart(updatedItem);
-      const updatedCart = [
-        ...Array.prototype.slice.call(cartItems, 0, index),
-        ...Array.prototype.slice.call(cartItems, index + 1)
-      ];
-      setCartItems(updatedCart);
+      removeFromCart(product);
     } else {
       const updatedCart = Object.assign([], cartItems, { [index]: updatedItem });
       setCartItems(updatedCart);
@@ -77,6 +81,7 @@ const useCart = () => {
 
   return {
     addToCart,
+    removeFromCart,
     incrementQuantity,
     decrementQuantity,
     isCartVisible,
