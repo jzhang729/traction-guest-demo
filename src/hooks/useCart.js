@@ -6,16 +6,13 @@ const useCart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
 
-  useEffect(
-    () => {
-      setCartTotal(getUpdatedTotal());
+  useEffect(() => {
+    setCartTotal(getUpdatedTotal());
 
-      if (cartItems.length === 0) {
-        setIsCartVisible(false);
-      }
-    },
-    [cartItems]
-  );
+    if (cartItems.length === 0) {
+      setIsCartVisible(false);
+    }
+  }, [cartItems]);
 
   const getUpdatedTotal = () => {
     return cartItems.reduce((total, item) => {
@@ -36,9 +33,9 @@ const useCart = () => {
   };
 
   const addToCart = product => {
-    console.log({ product });
+    // console.log({ product });
     const itemAlreadyInCart = cartItems.find(item => item.sku === product.sku);
-    console.log({ itemAlreadyInCart });
+    // console.log({ itemAlreadyInCart });
 
     if (itemAlreadyInCart) {
       incrementQuantity(itemAlreadyInCart);

@@ -37,7 +37,6 @@ const Header = () => {
       >
         <img src={shipLogo} alt="Arggghh" />
       </Pane>
-      {/* </Pane> */}
     </OuterWrapper>
   );
 };
