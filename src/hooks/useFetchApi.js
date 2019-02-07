@@ -4,7 +4,6 @@ import listProducts from "../mockData/listProducts";
 import singleProduct from "../mockData/singleProduct";
 
 const useFetchApi = (initialUrl = "", mockResultKey = null) => {
-  // const [isMock] = useState(Boolean(mockResultKey));
   const [url, setUrl] = useState(initialUrl);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -15,9 +14,8 @@ const useFetchApi = (initialUrl = "", mockResultKey = null) => {
 
   const fetchMockData = () => {
     const result = mockResults[mockResultKey];
-    console.log("mock result", result);
-
     try {
+      console.log(result);
       setData(result);
       setIsLoading(false);
     } catch (error) {
@@ -28,7 +26,7 @@ const useFetchApi = (initialUrl = "", mockResultKey = null) => {
   const fetchData = async () => {
     try {
       const result = await axios.get(url).then(response => response.data);
-      console.log(result);
+      // console.log(result);
       setData(result);
       setIsLoading(false);
     } catch (error) {
