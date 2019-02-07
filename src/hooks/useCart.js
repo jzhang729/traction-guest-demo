@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const useCart = () => {
-  const [isCartVisible, setIsCartVisible] = useState(true);
+  const [isCartVisible, setIsCartVisible] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
 

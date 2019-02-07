@@ -5,6 +5,27 @@ import PriceDisplay from "./PriceDisplay";
 import slugify from "slugify";
 import CartContext from "../contexts/CartContext";
 import { getUpdatedTotal } from "../utils/cartFunctions";
+import styled from "styled-components";
+
+const ProductCardWrapper = styled.div`
+  margin: 1rem;
+  padding: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #edf0f2;
+  width: 90%;
+
+  @media (min-width: 600px) {
+    width: 40%;
+  }
+
+  @media (min-width: 800px) {
+    width: 30%;
+  }
+`;
 
 const ProductCard = ({ product, history }) => {
   const {
@@ -40,16 +61,7 @@ const ProductCard = ({ product, history }) => {
   };
 
   return (
-    <Pane
-      margin="1rem"
-      padding="1rem"
-      maxWidth="30%"
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      border="muted"
-      // onMouseEnter={() => {}} TODO: Add a focus animation if time allows
-    >
+    <ProductCardWrapper>
       <Pane marginBottom="2rem">
         <Link
           to={{
@@ -60,13 +72,15 @@ const ProductCard = ({ product, history }) => {
           <img src={product.image} alt={product.name} />
         </Link>
       </Pane>
-      <Pane flex="1 1 100px">
+
+      <Pane marginTop="1rem" flex="1 1 auto">
         <Paragraph>
           <Strong size={400}>{product.name}</Strong>
         </Paragraph>
         <PriceDisplay regularPrice={product.regularPrice} salePrice={product.salePrice} />
       </Pane>
-      <Pane justifySelf="flex-end">
+
+      <Pane display="flex" alignItems="center">
         <Link
           style={{ textDecoration: "none" }}
           to={{
@@ -74,7 +88,7 @@ const ProductCard = ({ product, history }) => {
             state: { sku: product.sku }
           }}
         >
-          <Button height={40} intent="none" marginRight={12}>
+          <Button height={40} intent="none" marginY="0.5rem" marginRight="0.5rem">
             Investigate
           </Button>
         </Link>
@@ -83,14 +97,15 @@ const ProductCard = ({ product, history }) => {
           appearance="primary"
           intent="none"
           color="#ffffff"
-          marginRight={12}
+          marginY="0.5rem"
+          marginRight="0.5rem"
           height={40}
           onClick={() => handleAddToCart(product)}
         >
-          Load Aboard
+          Loot Item
         </Button>
       </Pane>
-    </Pane>
+    </ProductCardWrapper>
   );
 };
 

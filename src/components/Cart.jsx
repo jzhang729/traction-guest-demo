@@ -1,8 +1,8 @@
 import React, { Fragment, useContext } from "react";
-import { Button, Card, Heading, Pane, SideSheet } from "evergreen-ui";
+import { Button, Heading, Pane, SideSheet } from "evergreen-ui";
 import { Paragraph } from "evergreen-ui";
 import CartContext from "../contexts/CartContext";
-import { getProductPrice } from "../utils/cartFunctions";
+import CartItem from "./CartItem";
 
 const Cart = () => {
   const { isCartVisible, setIsCartVisible, cartItems, cartTotal } = useContext(CartContext);
@@ -20,39 +20,28 @@ const Cart = () => {
         width={400}
       >
         <Pane zIndex={1} flexShrink={0} elevation={0} backgroundColor="white">
-          <Pane padding={16}>
-            <Heading size={600}>Title</Heading>
-            <Paragraph size={400}>Optional description or sub title</Paragraph>
+          <Pane padding="2rem">
+            <Heading size={500}>Pirate Ship</Heading>
           </Pane>
         </Pane>
-        <Pane flex="1" overflowY="scroll" background="tint1" padding={16}>
+
+        {/*  Cart Items Div */}
+        <Pane flex="1" overflowY="scroll" background="tint1" padding="2rem">
           {cartItems.map((item, index) => {
-            return (
-              <Card
-                key={index}
-                backgroundColor="white"
-                elevation={0}
-                marginBottom="1rem"
-                padding="1rem"
-              >
-                <Pane display="flex" justifyContent="space-between">
-                  <img src={item.thumbnailImage} alt={item.name} />
-                  <Heading size={400} marginX="0.5rem">
-                    {item.name}
-                  </Heading>
-                </Pane>
-                <Pane marginTop="1rem">
-                  <Heading size={200}>Price: ${getProductPrice(item)}</Heading>
-                  <Heading size={200}>Quantity: {item.quantity}</Heading>
-                </Pane>
-              </Card>
-            );
+            return <CartItem item={item} index={index} key={index} />;
           })}
         </Pane>
 
+        {/* Checkout Div */}
         <Pane zIndex={1} flexShrink={0} elevation={0} backgroundColor="white">
-          <Pane padding={16}>
-            <Paragraph marginX="auto" paddingY="1rem" display="flex" justifyContent="center">
+          <Pane padding="2rem">
+            <Paragraph
+              size={600}
+              marginX="auto"
+              paddingY="1rem"
+              display="flex"
+              justifyContent="center"
+            >
               Total: ${cartTotal}
             </Paragraph>
             <Button

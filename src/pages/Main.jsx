@@ -20,7 +20,7 @@ const Main = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <Pane display="flex" flexWrap="wrap">
+        <Pane display="flex" flexWrap="wrap" justifyContent="center">
           {data.products.map(product => {
             return <ProductCard key={product.sku} product={product} />;
           })}
