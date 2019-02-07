@@ -41,10 +41,10 @@
     "postcss-loader": "3.0.0",
     "postcss-preset-env": "6.3.1",
     "postcss-safe-parser": "4.0.1",
-    "react": "next",
+    "react": "^16.8.1",
     "react-app-polyfill": "^0.2.0",
     "react-dev-utils": "^7.0.1",
-    "react-dom": "next",
+    "react-dom": "^16.8.1",
     "react-loadable": "^5.5.0",
     "react-router-dom": "^4.3.1",
     "resolve": "1.8.1",
@@ -69,13 +69,7 @@
     "extends": [
       "react-app",
       "prettier"
-    ],
-    "plugins": [
-      "react-hooks"
-    ],
-    "rules": {
-      "react-hooks/rules-of-hooks": "error"
-    }
+    ]
   },
   "browserslist": [
     ">0.2%",
@@ -87,7 +81,6 @@
     "babel-plugin-styled-components": "^1.10.0",
     "eslint-config-prettier": "^4.0.0",
     "eslint-plugin-prettier": "^3.0.1",
-    "eslint-plugin-react-hooks": "0.0.0",
     "tachyons": "^4.10.0"
   },
   "jest": {

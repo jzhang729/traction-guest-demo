@@ -11,8 +11,8 @@ const Product = props => {
   } = useFetchApi(
     `https://api.bestbuy.com/v1/products(sku=${props.location.state.sku})?apiKey=${
       process.env.REACT_APP_API_KEY
-    }&show=name,sku,image,regularPrice,salePrice,description,shortDescription,features&sort=name.asc&format=json`,
-    "singleProduct"
+    }&show=name,sku,image,regularPrice,salePrice,description,shortDescription,features&sort=name.asc&format=json`
+    // "singleProduct"
   );
 
   return (
