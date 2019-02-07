@@ -3,6 +3,7 @@ import { Pane } from "evergreen-ui";
 import ProductCard from "../components/ProductCard";
 import useFetchApi from "../hooks/useFetchApi";
 import { PageWrapper } from "../styles/global";
+import Loading from "../components/Loading";
 
 const Main = () => {
   const { data, isLoading, isError } = useFetchApi(
@@ -17,7 +18,7 @@ const Main = () => {
       {isError && <div>Something went wrong...</div>}
 
       {isLoading ? (
-        <div>Loading...</div>
+        <Loading />
       ) : (
         <Pane display="flex" flexWrap="wrap">
           {data.products.map(product => {
