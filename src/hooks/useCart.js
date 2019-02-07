@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { getFinalSalePrice } from "../utils/cartFunctions";
 
 const useCart = () => {
   const [isCartVisible, setIsCartVisible] = useState(false);
@@ -8,20 +9,18 @@ const useCart = () => {
   useEffect(
     () => {
       setCartTotal(getUpdatedTotal());
+
+      if (cartItems.length === 0) {
+        setIsCartVisible(false);
+      }
     },
     [cartItems]
   );
-
-  const getFinalSalePrice = ({ salePrice, regularPrice }) => {
-    return salePrice && regularPrice ? parseFloat(salePrice) : parseFloat(regularPrice);
-  };
 
   const getUpdatedTotal = () => {
     return cartItems.reduce((total, item) => {
       const price = getFinalSalePrice(item);
       return Number((parseFloat(total) + parseFloat(price) * parseFloat(item.quantity)).toFixed(2));
-      // console.log({ value });
-      // return value;
     }, 0);
   };
 
@@ -38,9 +37,6 @@ const useCart = () => {
   const incrementQuantity = (product, amountToIncrement = 1) => {
     const index = findIndexOfItemInCart(product);
     const updatedItem = { ...product, quantity: product.quantity + amountToIncrement };
-
-    // const updatedCart = Object.assign([], cartItems, { [index]: updatedItem });
-    // const updatedCart = [...cartItems, { [index]: updatedItem }];
     const updatedCart = [
       ...Array.prototype.slice.call(cartItems, 0, index),
       updatedItem,
@@ -55,12 +51,10 @@ const useCart = () => {
 
     if (updatedItem.quantity <= 0) {
       const index = findIndexOfItemInCart(updatedItem);
-      console.log("Remove the item from cart", index, cartItems);
       const updatedCart = [
         ...Array.prototype.slice.call(cartItems, 0, index),
         ...Array.prototype.slice.call(cartItems, index + 1)
       ];
-      console.log({ updatedItem });
       setCartItems(updatedCart);
     } else {
       const updatedCart = Object.assign([], cartItems, { [index]: updatedItem });

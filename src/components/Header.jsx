@@ -18,7 +18,12 @@ const Header = () => {
     <OuterWrapper>
       <Pane padding="1.5rem">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <Heading size={800}>Captain H00X</Heading>
+          <Heading marginLeft="1.5rem" size={800}>
+            Captain H00X
+          </Heading>
+          <Heading marginLeft="1.5rem" marginTop="default" fontStyle="italic" size={400}>
+            Piratin' since '94
+          </Heading>
         </Link>
       </Pane>
       <div />
