@@ -35,13 +35,7 @@ const Cart = () => {
         {/* Checkout Div */}
         <Pane zIndex={1} flexShrink={0} elevation={0} backgroundColor="white">
           <Pane padding="2rem">
-            <Paragraph
-              size={600}
-              marginX="auto"
-              paddingY="1rem"
-              display="flex"
-              justifyContent="center"
-            >
+            <Paragraph marginX="auto" paddingY="1rem" display="flex" justifyContent="center">
               Total: ${cartTotal}
             </Paragraph>
             <Button

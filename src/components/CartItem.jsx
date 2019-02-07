@@ -1,21 +1,45 @@
-import React from "react";
-import { Card, Heading, Pane } from "evergreen-ui";
-import { getProductPrice } from "../utils/cartFunctions";
+import React, { useContext } from "react";
+import { Card, Heading, Icon, Paragraph, Pane } from "evergreen-ui";
+import { getFinalSalePrice } from "../utils/cartFunctions";
+import CartContext from "../contexts/CartContext";
 
 const CartItem = ({ item, index }) => {
+  const { decrementQuantity, incrementQuantity } = useContext(CartContext);
+
   return (
     <Card backgroundColor="white" elevation={0} marginBottom="1rem" padding="1rem">
+      {/* Top Part */}
       <Pane display="flex" justifyContent="space-between">
-        <Pane>
+        <Pane flex="1 1 auto">
           <img src={item.thumbnailImage} alt={item.name} />
         </Pane>
-        <Heading size={400} marginX="0.5rem">
-          {item.name}
-        </Heading>
+        <Pane flex="0 1 70%" marginX="0.5rem">
+          <Paragraph>{item.name}</Paragraph>
+        </Pane>
       </Pane>
-      <Pane marginTop="1rem">
-        <Heading size={200}>Price: ${getProductPrice(item)}</Heading>
-        <Heading size={200}>Quantity: {item.quantity}</Heading>
+
+      {/* Bottom Part */}
+      <Pane marginTop="1rem" display="flex" justifyContent="space-between">
+        <Pane>
+          <Heading size={200}>Price: ${getFinalSalePrice(item)}</Heading>
+          <Heading size={200}>Quantity: {item.quantity}</Heading>
+        </Pane>
+        <Pane>
+          <Icon
+            color="muted"
+            cursor="pointer"
+            size={32}
+            icon="plus"
+            onClick={() => incrementQuantity(item)}
+          />
+          <Icon
+            color="muted"
+            cursor="pointer"
+            size={32}
+            icon="minus"
+            onClick={() => decrementQuantity(item)}
+          />
+        </Pane>
       </Pane>
     </Card>
   );

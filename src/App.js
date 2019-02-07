@@ -43,30 +43,23 @@ const AsyncNotFound = Loadable({
 });
 
 const App = () => {
-  const {
-    isCartVisible,
-    setIsCartVisible,
-    cartItems,
-    setCartItems,
-    cartTotal,
-    setCartTotal
-  } = useCart();
+  // const {
+  //   isCartVisible,
+  //   setIsCartVisible,
+  //   cartItems,
+  //   setCartItems,
+  //   cartTotal,
+  //   setCartTotal,
+  //   incrementQuantity,
+  //   decrementQuantity
+  // } = useCart();
 
   return (
     <Fragment>
       <Normalize />
       <GlobalStyle /> {/* Overwrite any global styles from Normalize here */}
       <BrowserRouter>
-        <CartContext.Provider
-          value={{
-            isCartVisible,
-            setIsCartVisible,
-            cartItems,
-            setCartItems,
-            cartTotal,
-            setCartTotal
-          }}
-        >
+        <CartContext.Provider value={useCart()}>
           <AppWrapper>
             <Cart />
             <Route path="/" component={Header} />

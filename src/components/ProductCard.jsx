@@ -4,7 +4,6 @@ import { Button, Pane, Paragraph, Strong } from "evergreen-ui";
 import PriceDisplay from "./PriceDisplay";
 import slugify from "slugify";
 import CartContext from "../contexts/CartContext";
-import { getUpdatedTotal } from "../utils/cartFunctions";
 import styled from "styled-components";
 
 const ProductCardWrapper = styled.div`
@@ -27,15 +26,10 @@ const ProductCardWrapper = styled.div`
   }
 `;
 
-const ProductCard = ({ product, history }) => {
-  const {
-    isCartVisible,
-    setIsCartVisible,
-    cartItems,
-    setCartItems,
-    cartTotal,
-    setCartTotal
-  } = useContext(CartContext);
+const ProductCard = ({ product }) => {
+  const { isCartVisible, setIsCartVisible, cartItems, setCartItems, addToCart } = useContext(
+    CartContext
+  );
 
   const handleAddExistingItem = (item, index) => {
     const updatedItem = { ...item, quantity: item.quantity + 1 };
@@ -47,12 +41,9 @@ const ProductCard = ({ product, history }) => {
     let itemAlreadyInCart = cartItems.find(item => item.sku === product.sku);
 
     if (itemAlreadyInCart) {
-      console.log("Already have this item");
       handleAddExistingItem(itemAlreadyInCart, cartItems.indexOf(itemAlreadyInCart));
     } else {
-      const productWithQuantity = { ...product, quantity: 1 };
-      setCartItems([...cartItems, productWithQuantity]);
-      setCartTotal(getUpdatedTotal(cartTotal, product));
+      addToCart(product);
     }
 
     if (!isCartVisible) {
