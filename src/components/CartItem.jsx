@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { Card, Heading, Icon, Paragraph, Pane } from "evergreen-ui";
+import { Card, Heading, Icon, Paragraph, Pane, UnorderedList, ListItem } from "evergreen-ui";
 import { getFinalSalePrice } from "../utils/cartFunctions";
 import CartContext from "../contexts/CartContext";
 
 const CartItem = ({ item, index }) => {
-  const { decrementQuantity, incrementQuantity } = useContext(CartContext);
+  const { decrementQuantity, incrementQuantity, removeFromCart } = useContext(CartContext);
 
   return (
     <Card backgroundColor="white" elevation={0} marginBottom="1rem" padding="1rem">
@@ -41,6 +41,16 @@ const CartItem = ({ item, index }) => {
           />
         </Pane>
       </Pane>
+      <UnorderedList>
+        <ListItem
+          color="#EC4C47"
+          icon="ban-circle"
+          cursor="pointer"
+          onClick={() => removeFromCart(item)}
+        >
+          Remove
+        </ListItem>
+      </UnorderedList>
     </Card>
   );
 };
