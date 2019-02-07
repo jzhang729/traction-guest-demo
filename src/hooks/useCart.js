@@ -25,9 +25,22 @@ const useCart = () => {
   };
 
   const addToCart = product => {
-    // Adding an item to cart where there was none before
-    const productWithQuantity = { ...product, quantity: 1 };
-    setCartItems([...cartItems, productWithQuantity]);
+    const itemAlreadyInCart = cartItems.find(item => item.sku === product.sku);
+
+    if (itemAlreadyInCart) {
+      const index = findIndexOfItemInCart(itemAlreadyInCart);
+      const updatedItem = { ...product, quantity: product.quantity + 1 };
+      const updatedCart = Object.assign([], cartItems, { [index]: updatedItem });
+      setCartItems(updatedCart);
+    } else {
+      // Adding an item to cart where there was none before
+      const productWithQuantity = { ...product, quantity: 1 };
+      setCartItems([...cartItems, productWithQuantity]);
+    }
+
+    if (!isCartVisible) {
+      setIsCartVisible(true);
+    }
   };
 
   const findIndexOfItemInCart = product => {

@@ -9,7 +9,6 @@ import styled from "styled-components";
 const ProductCardWrapper = styled.div`
   margin: 1rem;
   padding: 1rem;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,29 +26,7 @@ const ProductCardWrapper = styled.div`
 `;
 
 const ProductCard = ({ product }) => {
-  const { isCartVisible, setIsCartVisible, cartItems, setCartItems, addToCart } = useContext(
-    CartContext
-  );
-
-  const handleAddExistingItem = (item, index) => {
-    const updatedItem = { ...item, quantity: item.quantity + 1 };
-    const updatedCart = Object.assign([], cartItems, { [index]: updatedItem });
-    setCartItems(updatedCart);
-  };
-
-  const handleAddToCart = product => {
-    let itemAlreadyInCart = cartItems.find(item => item.sku === product.sku);
-
-    if (itemAlreadyInCart) {
-      handleAddExistingItem(itemAlreadyInCart, cartItems.indexOf(itemAlreadyInCart));
-    } else {
-      addToCart(product);
-    }
-
-    if (!isCartVisible) {
-      setIsCartVisible(true);
-    }
-  };
+  const { addToCart } = useContext(CartContext);
 
   return (
     <ProductCardWrapper>
@@ -91,7 +68,7 @@ const ProductCard = ({ product }) => {
           marginY="0.5rem"
           marginRight="0.5rem"
           height={40}
-          onClick={() => handleAddToCart(product)}
+          onClick={() => addToCart(product)}
         >
           Loot Item
         </Button>

@@ -8,6 +8,7 @@ export default {
       salePrice: 279.99,
       description: null,
       shortDescription: "1080p (Full HD) resolutionSmart TV, webOS 3.560Hz refresh rate",
+      thumbnailImage: "https://img.bbystatic.com/BestBuy_US/images/products/5734/5734900_s.gif",
       features: [
         {
           feature:

@@ -1,6 +1,5 @@
 import React, { Fragment, useContext } from "react";
-import { Button, Heading, Pane, SideSheet } from "evergreen-ui";
-import { Paragraph } from "evergreen-ui";
+import { Button, Heading, Pane, SideSheet, Text } from "evergreen-ui";
 import CartContext from "../contexts/CartContext";
 import CartItem from "./CartItem";
 
@@ -35,9 +34,12 @@ const Cart = () => {
         {/* Checkout Div */}
         <Pane zIndex={1} flexShrink={0} elevation={0} backgroundColor="white">
           <Pane padding="2rem">
-            <Paragraph marginX="auto" paddingY="1rem" display="flex" justifyContent="center">
-              Total: ${cartTotal}
-            </Paragraph>
+            <Pane marginX="auto" paddingY="1rem" display="flex" justifyContent="center">
+              <Text>Total:</Text>{" "}
+              <Heading marginX="0.5rem" size={600}>
+                ${cartTotal}
+              </Heading>
+            </Pane>
             <Button
               appearance="primary"
               intent="success"

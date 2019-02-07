@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import useFetchApi from "../hooks/useFetchApi";
 import { Heading, Pane, Button, UnorderedList, ListItem } from "evergreen-ui";
 import { PageWrapper } from "../styles/global";
 import Loading from "../components/Loading";
+import CartContext from "../contexts/CartContext";
 
 const Product = props => {
+  const { addToCart } = useContext(CartContext);
+
   const {
     data: { products },
     isLoading,
@@ -12,7 +15,7 @@ const Product = props => {
   } = useFetchApi(
     `https://api.bestbuy.com/v1/products(sku=${props.location.state.sku})?apiKey=${
       process.env.REACT_APP_API_KEY
-    }&show=name,sku,image,regularPrice,salePrice,description,shortDescription,features&sort=name.asc&format=json`,
+    }&show=name,sku,image,regularPrice,salePrice,description,shortDescription,features,thumbnailImage&sort=name.asc&format=json`,
     "singleProduct"
   );
 
@@ -32,17 +35,22 @@ const Product = props => {
                 <img src={products[0].image} alt={products[0].name} />
               </Pane>
 
-              <Button
-                appearance="primary"
-                intent="none"
-                color="#ffffff"
-                marginTop="0"
-                marginX="1.5rem"
-                height={40}
-                onClick={() => {}}
-              >
-                Loot Item
-              </Button>
+              <Pane display="flex" flexDirection="column" alignItems="center">
+                <Heading size={500} marginBottom="default">
+                  ${products[0].salePrice}
+                </Heading>
+                <Button
+                  appearance="primary"
+                  intent="none"
+                  color="#ffffff"
+                  marginTop="0"
+                  marginX="1.5rem"
+                  height={40}
+                  onClick={() => addToCart(products[0])}
+                >
+                  Loot Item
+                </Button>
+              </Pane>
             </Pane>
 
             <UnorderedList size={500} marginY="default" minWidth="50vw" maxWidth="70vw">
