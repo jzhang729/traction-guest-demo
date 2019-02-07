@@ -1,6 +1,6 @@
 # Traction Guest Demo
 
-[Live Demo](https://tg-guest.herokuapp.com)
+[Live Demo](https://tg-demo.herokuapp.com)
 
 ## Running locally
 
