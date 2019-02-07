@@ -38,7 +38,7 @@ const useFetchApi = (initialUrl = "", mockResultKey = null) => {
 
   useEffect(
     () => {
-      if (mockResultKey) {
+      if (mockResultKey && process.env.NODE_ENV === "development") {
         fetchMockData();
       } else {
         fetchData();

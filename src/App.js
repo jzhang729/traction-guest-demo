@@ -1,35 +1,24 @@
 import React, { Fragment } from "react";
+import Loadable from "react-loadable";
+import styled from "styled-components";
 
 import Header from "./components/Header";
-import Loadable from "react-loadable";
 import Loading from "./components/Loading";
-import NotFound from "./pages/NotFound";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
+import Cart from "./components/Cart";
 
-import { Normalize } from "styled-normalize";
-import styled from "styled-components";
+import NotFound from "./pages/NotFound";
+
 import useCart from "./hooks/useCart";
 import CartContext from "./contexts/CartContext";
 
-const Cart = styled.div`
-  position: absolute;
-  border: 2px solid red;
-  overflow-y: scroll;
-  top: 5rem;
-  right: 0;
-  height: 100%;
-  background-color: #ffffff;
-  z-index: 3;
-  padding: 1rem;
-  opacity: 1;
-  /* transform: ${props => (props.isCartVisible ? "translateX(0%)" : "translateX(100%)")}; */
-  box-shadow: 0.25rem 0 1rem #333333;
-  width: 100%;
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { createGlobalStyle } from "styled-components";
+import { Normalize } from "styled-normalize";
 
-  @media (min-width: 400px) {
-    width: 400px;
-  }
+const ContentWrapper = styled.div`
+  position: relative;
+  height: 100vh;
+  width: 100vw;
 `;
 
 const GlobalStyle = createGlobalStyle`
@@ -37,6 +26,9 @@ const GlobalStyle = createGlobalStyle`
     font-size: 16px; /* Base measure for REM units */ 
     margin: 0;
     padding: 0;
+    width: 100vw;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }  
 `;
 
@@ -64,15 +56,15 @@ const App = () => {
             setIsCartVisible
           }}
         >
-          <div>
-            <Route path="/" component={Header} />
+          <Cart />
+          <Route path="/" component={Header} />
+          <ContentWrapper>
             <Switch>
               <Route path="/" exact component={AsyncMain} />
               <Route path="/products/:id" exact component={AsyncProduct} />
               <Route component={NotFound} />
             </Switch>
-            {isCartVisible ? <Cart>Cart goes here</Cart> : null}
-          </div>
+          </ContentWrapper>
         </CartContext.Provider>
       </BrowserRouter>
     </Fragment>

@@ -44,7 +44,7 @@ const ProductCard = ({ product }) => {
           height={40}
           onClick={() => (isCartVisible ? null : setIsCartVisible(true))}
         >
-          Add To Cart
+          Load Aboard th' Vessel
         </Button>
       </Pane>
     </Pane>

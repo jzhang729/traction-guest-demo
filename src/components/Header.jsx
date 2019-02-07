@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Icon, Pane, Heading } from "evergreen-ui";
+import { Pane, Heading } from "evergreen-ui";
 import styled from "styled-components";
 import CartContext from "../contexts/CartContext";
+import shipLogo from "../assets/ship.svg";
 
 const OuterWrapper = styled.div`
   background-color: #e8fdf5;
@@ -17,22 +18,21 @@ const Header = () => {
     <OuterWrapper>
       <Pane padding="1.5rem">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <Heading size={600}>Captain Hook's Electronics</Heading>
+          <Heading size={800}>Captain H00X</Heading>
         </Link>
       </Pane>
       <div />
-
-      <Pane padding="1.5rem">
-        <Icon
-          color="dark"
-          cursor="pointer"
-          size={32}
-          icon="shopping-cart"
-          onClick={() => {
-            setIsCartVisible(!isCartVisible);
-          }}
-        />
+      <Pane
+        cursor="pointer"
+        onClick={() => {
+          setIsCartVisible(!isCartVisible);
+        }}
+        padding="1.5rem"
+        maxWidth={100}
+      >
+        <img src={shipLogo} alt="Arggghh" />
       </Pane>
+      {/* </Pane> */}
     </OuterWrapper>
   );
 };
