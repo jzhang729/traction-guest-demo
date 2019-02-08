@@ -36,9 +36,7 @@ const useCart = () => {
   };
 
   const addToCart = product => {
-    console.log({ product });
     const itemAlreadyInCart = cartItems.find(item => item.sku === product.sku);
-    console.log({ itemAlreadyInCart });
 
     if (itemAlreadyInCart) {
       incrementQuantity(itemAlreadyInCart);
